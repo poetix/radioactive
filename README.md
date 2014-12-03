@@ -1,7 +1,7 @@
 radioactive
 ===========
 
-A Java 8 library for building, mutating and mapping beans.
+A Java 8 library for building, validating, mutating and mapping beans.
 
 [![Build Status](https://travis-ci.org/poetix/radioactive.svg?branch=master)](https://travis-ci.org/poetix/radioactive)
 
