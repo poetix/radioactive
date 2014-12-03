@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public interface Setter<T, V> extends BiConsumer<T, V> {
 
@@ -45,6 +46,10 @@ public interface Setter<T, V> extends BiConsumer<T, V> {
 
     default Consumer<T> of(V value) {
         return t -> set(t, value);
+    }
+
+    default Consumer<T> of(Supplier<V> supplier) {
+        return t -> set(t, supplier.get());
     }
 
 }

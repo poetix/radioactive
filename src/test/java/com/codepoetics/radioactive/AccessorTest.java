@@ -18,6 +18,7 @@ public class AccessorTest {
         public static final Accessor<Address, String> THIRD_LINE = Accessor.of(Address::getThirdLine, Address::setThirdLine);
         public static final Accessor<Address, String> FOURTH_LINE = Accessor.of(Address::getFourthLine, Address::setFourthLine);
         public static final Accessor<Address, String> POSTCODE = Accessor.of(Address::getPostCode, Address::setPostCode);
+        public static final Builder<Address, Address> BUILDER = Builder.startingWith(Address::new);
 
         private String firstLine;
         private String secondLine;
@@ -70,6 +71,7 @@ public class AccessorTest {
 
         public static final Accessor<Person, String> NAME = Accessor.of(Person::getName, Person::setName);
         public static final Accessor<Person, Address> ADDRESS = Accessor.of(Person::getAddress, Person::setAddress);
+        public static final Builder<Person, Person> BUILDER = Builder.startingWith(Person::new);
 
         private String name;
         private Address address;
@@ -91,12 +93,12 @@ public class AccessorTest {
         }
     }
 
-    private final Person person = Builder.startingWith(Person::new)
-            .with(Person.NAME, "Arthur Putey")
-            .with(Person.ADDRESS, Builder.startingWith(Address::new)
-                    .with(Address.FIRST_LINE, "22 Acacia Avenue")
-                    .with(Address.SECOND_LINE, "Sunderland")
-                    .with(Address.POSTCODE, "VB6 5UX"))
+    private final Person person = Person.BUILDER
+            .with(Person.NAME.of("Arthur Putey"),
+                  Person.ADDRESS.of(Address.BUILDER
+                    .with(Address.FIRST_LINE, "22 Acacia Avenue",
+                          Address.SECOND_LINE, "Sunderland",
+                          Address.POSTCODE, "VB6 5UX")))
             .get();
 
     @Test public void
