@@ -1,5 +1,6 @@
 package com.codepoetics.radioactive;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -11,13 +12,17 @@ public interface Builder<B, T> extends Supplier<T> {
     static <T> Builder<T, T> startingWith(Supplier<T> instantiator) {
         return buildingWith(instantiator, Function.identity());
     }
-    
+
+    static <T, B extends Supplier<T>> Builder<B, T> buildingWith(Supplier<B> builderSupplier) {
+        return buildingWith(builderSupplier, Supplier::get);
+    }
+
     static <B, T> Builder<B, T> buildingWith(Supplier<B> builderSupplier, Function<B, T> buildMethod) {
         List<Consumer<? super B>> settings = new LinkedList<>();
         return new Builder<B, T>() {
             @Override
-            public Builder<B, T> with(Consumer<? super B> setting) {
-                settings.add(setting);
+            public Builder<B, T> with(Consumer<? super B>...newSettings) {
+                settings.addAll(Arrays.asList(newSettings));
                 return this;
             }
 
@@ -57,9 +62,11 @@ public interface Builder<B, T> extends Supplier<T> {
         return with(setter1, value1).with(setter2, value2).with(setter3, value3).with(setter4, value4).with(setter5, value5);
     }
 
+    @SuppressWarnings("unchecked")
     default <V> Builder<B, T> with(Setter<? super B, V> setter, Supplier<V> value) {
         return with(target -> setter.set(target, value.get()));
     }
 
-    Builder<B, T> with(Consumer<? super B> setting);
+    @SuppressWarnings("unchecked")
+    Builder<B, T> with(Consumer<? super B>...settings);
 }

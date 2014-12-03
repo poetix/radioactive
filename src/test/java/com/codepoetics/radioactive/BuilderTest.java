@@ -27,6 +27,10 @@ public class BuilderTest {
         }
 
         public static class Builder implements Supplier<Record> {
+
+            public static final Setter<Builder, String> NAME = Setter.of(Builder::withName);
+            public static final Setter<Builder, Integer> AGE = Setter.of(Builder::withAge);
+
             private String name;
             private int age;
 
@@ -46,11 +50,22 @@ public class BuilderTest {
         }
     }
 
-    @Test
-    public void buildWithABuilder() {
-        Record record = Builder.buildingWith(Record.Builder::new, Record.Builder::get)
+    @Test public void
+    build_with_a_builder() {
+        Record record = Builder.buildingWith(Record.Builder::new)
                 .with(Record.Builder::withName, "Arthur Putey",
                       Record.Builder::withAge, 30)
+                .get();
+
+        assertThat(record.getName(), equalTo("Arthur Putey"));
+        assertThat(record.getAge(), equalTo(30));
+    }
+
+    @Test public void
+    build_with_setters() {
+        Record record = Builder.buildingWith(Record.Builder::new)
+                .with(Record.Builder.NAME.of("Arthur Putey"),
+                      Record.Builder.AGE.of(30))
                 .get();
 
         assertThat(record.getName(), equalTo("Arthur Putey"));
