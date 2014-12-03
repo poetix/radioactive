@@ -34,7 +34,7 @@ Person person = Builder.startingWith(Person::new)
         .get();
 ```
 
-And to query and modify existing objects:
+to query and modify existing objects:
 
 ```java
 assertThat(Person.NAME.get(person), equalTo("Arthur Putey"));
@@ -51,7 +51,21 @@ Person.ADDRESS.join(Address.POSTCODE).set(person, "RA8 81T");
 assertThat(person.getAddress().getPostCode(), equalTo("RA8 81T"));
 ```
 
-Finally, you can use them to map from type to type:
+to validate objects:
+
+```java
+Validator<Person> validator = Validator
+        .validating("name", Person.NAME, equalTo("Agnes Phobos"))
+        .and("age", Person.AGE, greaterThanOrEqualTo(0));
+
+Valid<Person> validPerson = Valid.validate(new Person("Angus Eros", -2), validator);
+
+assertFalse(validPerson.isValid());
+assertFalse(validPerson.get().isPresent());
+assertThat(validPerson.validationErrors(), hasItems("name: Angus Eros != Agnes Phobos", "age: -2 < 0"));
+```
+
+and to map from type to type:
 
 ```java
 Person person1 = new Person();
