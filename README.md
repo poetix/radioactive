@@ -25,13 +25,12 @@ public static final Accessor<Person, Address> ADDRESS = Accessor.of(Person::getA
 You can use them to build new objects:
 
 ```java
-Person person = Builder.startingWith(Person::new)
-        .with(Person.NAME, "Arthur Putey")
-        .with(Person.ADDRESS, Builder.startingWith(Address::new)
-                .with(Address.FIRST_LINE, "22 Acacia Avenue")
-                .with(Address.SECOND_LINE, "Sunderland")
-                .with(Address.POSTCODE, "VB6 5UX"))
-        .get();
+Person person = Person.BUILDER
+    .with(Person.NAME.of("Arthur Putey"),
+          Person.ADDRESS.of(Address.BUILDER
+            .with(Address.FIRST_LINE, "22 Acacia Avenue",
+                  Address.SECOND_LINE, "Sunderland",
+                  Address.POSTCODE, "VB6 5UX")))
 ```
 
 to query and modify existing objects:
