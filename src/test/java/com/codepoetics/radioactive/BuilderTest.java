@@ -10,6 +10,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class BuilderTest {
 
     public static class Record {
+
+        public static final com.codepoetics.radioactive.Builder<Record.Builder, Record> BUILDER = com.codepoetics.radioactive.Builder.buildingWith(Record.Builder::new);
         private final String name;
         private final int age;
 
@@ -63,7 +65,7 @@ public class BuilderTest {
 
     @Test public void
     build_with_setters() {
-        Record record = Builder.buildingWith(Record.Builder::new)
+        Record record = Record.BUILDER
                 .with(Record.Builder.NAME.of("Arthur Putey"),
                       Record.Builder.AGE.of(30))
                 .get();
