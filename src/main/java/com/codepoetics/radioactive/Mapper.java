@@ -63,4 +63,12 @@ public interface Mapper<L, R, V> extends BiConsumer<L, R> {
         };
     }
 
+    default <O> Function<L, O> creatingWith(Supplier<R> builderInitialiser, Function<R, O> buildMethod) {
+        return l -> {
+            R r = builderInitialiser.get();
+            accept(l, r);
+            return buildMethod.apply(r);
+        };
+    }
+
 }

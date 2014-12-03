@@ -43,4 +43,8 @@ public interface Setter<T, V> extends BiConsumer<T, V> {
         return v -> set(target, v);
     }
 
+    default Consumer<T> of(V value) {
+        return t -> set(t, value);
+    }
+
 }
