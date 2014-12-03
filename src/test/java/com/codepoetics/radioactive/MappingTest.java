@@ -3,7 +3,9 @@ package com.codepoetics.radioactive;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -53,6 +55,35 @@ public class MappingTest {
         public void setQuest(String quest) {
             this.quest = quest;
         }
+
+        public static class Builder implements Supplier<Knight> {
+            private String name;
+            private int age;
+            private String quest;
+
+            public Builder withName(String name) {
+                this.name = name;
+                return this;
+            }
+
+            public Builder withAge(int age) {
+                this.age = age;
+                return this;
+            }
+
+            public Builder withQuest(String quest) {
+                this.quest = quest;
+                return this;
+            }
+
+            public Knight get() {
+                Knight knight = new Knight();
+                knight.setName(name);
+                knight.setAge(age);
+                knight.setQuest(quest);
+                return knight;
+            }
+        }
     }
 
     @Test public void
@@ -99,6 +130,23 @@ public class MappingTest {
                 .apply(person1);
 
         assertThat(bean2.getName(), equalTo("N/A"));
+        assertThat(bean2.getAge(), equalTo(30));
+        assertThat(bean2.getQuest(), equalTo("I seek the grail"));
+    }
+
+    @Test public void
+    mapping_with_builder() {
+        Person person1 = new Person();
+        person1.setName("Antigone");
+        person1.setAge(30);
+
+        Knight bean2 = Mapper.from(Person::getAge).to(Knight.Builder::withAge)
+                .andFrom(Person::getName).via(String::toUpperCase).to(Knight.Builder::withName)
+                .andFrom("I seek the grail").to(Knight.Builder::withQuest)
+                .creatingWith(Knight.Builder::new, Knight.Builder::get)
+                .apply(person1);
+
+        assertThat(bean2.getName(), equalTo("ANTIGONE"));
         assertThat(bean2.getAge(), equalTo(30));
         assertThat(bean2.getQuest(), equalTo("I seek the grail"));
     }
