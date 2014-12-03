@@ -11,7 +11,7 @@ In Maven:
 <dependency>
     <groupId>com.codepoetics</groupId>
     <artifactId>radioactive</artifactId>
-    <version>0.1</version>
+    <version>0.7</version>
 </dependency>
 ```
 
