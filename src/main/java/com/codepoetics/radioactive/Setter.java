@@ -40,7 +40,7 @@ public interface Setter<T, V> extends BiConsumer<T, V> {
         accept(target, newValue);
     }
 
-    default Consumer<V> toConsumer(T target) {
+    default Consumer<V> on(T target) {
         return v -> set(target, v);
     }
 

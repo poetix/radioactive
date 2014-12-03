@@ -37,7 +37,7 @@ public interface Getter<T, V> extends Function<T, V> {
         return apply(target);
     }
 
-    default Supplier<V> toSupplier(T target) {
+    default Supplier<V> from(T target) {
         return () -> get(target);
     }
 
