@@ -1,7 +1,19 @@
 radioactive
 ===========
 
-Java 8 library for mutating beans.
+A Java 8 library for building, mutating and mapping beans.
+
+[![Build Status](https://travis-ci.org/poetix/radioactive.svg?branch=master)](https://travis-ci.org/poetix/radioactive)
+
+In Maven:
+
+```xml
+<dependency>
+    <groupId>com.codepoetics</groupId>
+    <artifactId>radioactive</artifactId>
+    <version>0.1</version>
+</dependency>
+```
 
 An ```Accessor``` is a ```Getter``` paired with a ```Setter```, like so:
 
