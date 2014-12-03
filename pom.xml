@@ -46,9 +46,9 @@
 
 
     <scm>
-        <connection>scm:git:git://github.com/poetix/octarine.git</connection>
-        <developerConnection>scm:git:git@github.com:poetix/octarine.git</developerConnection>
-        <url>http://github.com/poetix/octarine</url>
+        <connection>scm:git:git://github.com/poetix/radioactive.git</connection>
+        <developerConnection>scm:git:git@github.com:poetix/radioactive.git</developerConnection>
+        <url>http://github.com/poetix/radioactive</url>
     </scm>
 
 </project>
