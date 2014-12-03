@@ -45,11 +45,11 @@ public final class Builder<B, T> implements Supplier<T> {
 
 
     public <V> Builder<B, T> with(Setter<? super B, V> setter, V value) {
-        return with(target -> setter.set(target, value));
+        return with(setter.of(value));
     }
 
     public <V> Builder<B, T> with(Setter<? super B, V> setter, Supplier<V> value) {
-        return with(target -> setter.set(target, value.get()));
+        return with(setter.of(value));
     }
 
 }
