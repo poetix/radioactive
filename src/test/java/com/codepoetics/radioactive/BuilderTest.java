@@ -55,8 +55,8 @@ public class BuilderTest {
     @Test public void
     build_with_a_builder() {
         Record record = Builder.buildingWith(Record.Builder::new)
-                .with(Record.Builder::withName, "Arthur Putey",
-                      Record.Builder::withAge, 30)
+                .with(Record.Builder.NAME.of("Arthur Putey"),
+                      Record.Builder.AGE.of(30))
                 .get();
 
         assertThat(record.getName(), equalTo("Arthur Putey"));
